@@ -16,33 +16,44 @@ class YourEvent
 
    def login_or_signup(role_str)
      role=role_str.constantize
-     puts "Please provide your email to login:"
+     puts "Please provide your email to login:".colorize(:yellow)
      email=STDIN.gets.chomp.downcase
       if role.find_by(email: email) != nil
           puts "Welcome back #{role.find_by(email: email).name}!".colorize(:yellow)
           sleep 3
-          main_menu
+          main_menu(role.find_by(email: email))
       elsif role.find_by(email: email) == nil
           puts "Sorry! This email does not exist.".colorize(:red)
+          puts "Please re-enter your email "
           sleep 3
           login_or_signup(client_or_event_planner)
       end
    end
 
-  #  def main_menu
-  #     puts "MAIN MENU".co
-  #     puts "Please choose from the following options"
+   def main_menu(role)
+      puts '*******************************************************************************************************************************'.colorize(:blue)
+      puts '                                                     MAIN MENU                                                                 '.colorize(:yellow)
+      puts '*******************************************************************************************************************************'.colorize(:blue)
+      puts "Welcome to the main menu. Please choose from the following options:".colorize(:yellow)
+   end
 
+    def run
+       welcome
+       login_or_signup(client_or_event_planner)
+    end
 
-  #  end
-
-
-   def run
-    welcome
-    login_or_signup(client_or_event_planner)
-    # wanna_see_favs?
-    # get_joke(what_subject)
-  end
+  #############################NOTES################################
+  #  def self.user_home_page(user)
+  #   choices = ["More Tips", "Saved Tips", "Logout"]
+  #   nav = @@prompt.select("\n", choices)
+  #   if nav == "More Tips"
+  #     user.select_a_tip
+  #   elsif nav == "Saved Tips"
+  #     user.user_saved_tips
+  #   else
+  #     CommandLineInterface.landing_page
+  #   end
+  # end
 
 ##################################################HELPER METHODS!!!########################################################
 
