@@ -28,28 +28,19 @@ def create_event_planner
     )
 end
 
-
-10.times do 
-    create_client
-  end
-
 10.times do 
     create_event_planner
 end
 
 def create_joiners(client)
-    # event_planners_number= rand(1..10)
-    # event_planners_number.times do
         Event.create(
             event_name: Faker::Company.name,
             date: Faker::Date.in_date_period,
-            email: Faker::Internet.email,
             location: Faker::Address.state,
             duration: rand(180..300),
             client_id: Client.all.sample.id,
             event_planner_id: EventPlanner.all.sample.id
         )
-    # end
   end 
 
   10.times do 
