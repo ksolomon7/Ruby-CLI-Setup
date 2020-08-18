@@ -44,7 +44,6 @@ end
   10.times do 
     create_event_planner
     create_joiners(create_client)
-    # create_task(event)
   end
 
   daisy= Client.create(name: "Daisy", phone_number: "212-914-2567", email: "klmnt@yahoo.com")
@@ -66,6 +65,13 @@ end
 #            status: status_option,
 #            event_id: event.id 
 #         )
+#   end
+ 
+# if task model and task tables were added
+# 10.times do 
+#     create_event_planner
+#     create_joiners(create_client)
+#     create_task(event)
 #   end
 
 puts "🔥 🔥 🔥 🔥 "

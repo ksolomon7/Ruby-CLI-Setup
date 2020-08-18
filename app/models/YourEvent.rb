@@ -16,19 +16,26 @@ class YourEvent
 
    def login_or_signup(role_str)
      role=role_str.constantize
-     puts "Please provide your email to login."
+     puts "Please provide your email to login:"
      email=STDIN.gets.chomp.downcase
-     role.find_by(email: email)
-     main_menu
-     binding.pry
+      if role.find_by(email: email) != nil
+          puts "Welcome back #{role.find_by(email: email).name}!".colorize(:yellow)
+          sleep 3
+          main_menu
+      elsif role.find_by(email: email) == nil
+          puts "Sorry! This email does not exist.".colorize(:red)
+          sleep 3
+          login_or_signup(client_or_event_planner)
+      end
    end
 
-   def main_menu
+  #  def main_menu
+  #     puts "MAIN MENU".co
+  #     puts "Please choose from the following options"
 
 
+  #  end
 
-   end
-   
 
    def run
     welcome
@@ -36,9 +43,7 @@ class YourEvent
     # wanna_see_favs?
     # get_joke(what_subject)
   end
-#    def login_or_signup
-    
-#    end
 
+##################################################HELPER METHODS!!!########################################################
 
 end
