@@ -12,7 +12,7 @@ end
 
 desc "start our app"
 task :start do
-  app = nameOfYourApp.new
+  app = YourEvent.new
   app.run
 end
 

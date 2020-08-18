@@ -1,4 +1,5 @@
 require_relative '../config/environment'
+require_relative '../app/models/YourEvents.rb'
 
-app = nameOfYourApp.new
+app = YourEvents.new()
 app.run

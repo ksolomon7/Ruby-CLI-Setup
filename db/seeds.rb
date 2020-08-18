@@ -5,7 +5,7 @@ Client.reset_pk_sequence
 EventPlanner.reset_pk_sequence
 Event.reset_pk_sequence
 
-########### different ways to write your seeds ############
+#####SEEDS#######
 
 def create_client
 
@@ -16,115 +16,56 @@ def create_client
     )
 end
 
-def create_event_planner
+def create_event_planner 
 
     title_name = ["Senior Event Planner", "Junior Event Planner"].sample
     event_planner= EventPlanner.create(
         name: Faker::Name.name_with_middle,
         phone_number: Faker::PhoneNumber.cell_phone,
-        years_of_experience: rand(5..25),
+        years_of_experience: rand(5..20),
         email: Faker::Internet.email,
         title: title_name
     )
 end
 
-10.times do 
-    create_event_planner
-end
 
 def create_joiners(client)
+    duration_options = ["2 hrs", "3 hrs", "4 hrs", "5 hrs", "6 hrs"].sample
         Event.create(
             event_name: Faker::Company.name,
             date: Faker::Date.in_date_period,
             location: Faker::Address.state,
-            duration: rand(180..300),
-            client_id: Client.all.sample.id,
+            duration: duration_options, 
+            client_id: client.id,
             event_planner_id: EventPlanner.all.sample.id
         )
-  end 
+end 
 
   10.times do 
+    create_event_planner
     create_joiners(create_client)
+    # create_task(event)
   end
 
+  daisy= Client.create(name: "Daisy", phone_number: "212-914-2567", email: "klmnt@yahoo.com")
+  bella= EventPlanner.create(name: "Bella", phone_number: "545-279-0765", years_of_experience: 10, email: "belb12@yahoo.com", title: "Senior Event Planner")
+  party= Event.create(event_name: "Party Central", date: Faker::Date.in_date_period, location: "Los Angeles", duration: "2 hrs", client_id:Client.find_by(name: "Daisy").id, event_planner_id: EventPlanner.find_by(name: "Bella").id )
+############################Task -stretch feature######################################
+#   def create_task(event)
+#         status_option= ["Complete", "Incomplete", "Pending"].sample
+#         note_options=["Finalize location",
+#               "Estimate costs",
+#               "Event budget",
+#               "Build an event website",
+#               "Identify sponsors",
+#               "Create guest list",
+#               "Rental items"].sample
 
-# 1: save everything to variables (makes it easy to connect models, best for when you want to be intentional about your seeds)
-# basil = Plant.create(name: "basil the herb", bought: 20200610, color: "green")
-# sylwia = Person.create(name: "Sylwia", free_time: "none", age: 30)
-# pp1 = PlantParenthood.create(plant_id: basil.id, person_id: sylwia.id, affection: 1_000_000, favorite?: true)
-
-
-
-# 2. Mass create -- in order to connect them later IN SEEDS (not through the app) you'll need to find their id
-## a. by passing an array of hashes:
-
-
-
-
-
-# Plant.create([
-#     {name: "Corn Tree", bought: 20170203, color: "green"},
-#     {name: "Prayer plant", bought: 20190815, color: "purple"},
-#     {name: "Cactus", bought: 20200110, color: "ugly green"}
-# ])
-# ## b. by interating over an array of hashes:
-# plants = [{name: "Elephant bush", bought: 20180908, color: "green"},
-#     {name: "Photos", bought: 20170910, color: "green"},
-#     {name: "Dragon tree", bought: 20170910, color: "green"},
-#     {name: "Snake plant", bought: 20170910, color: "dark green"},
-#     {name: "polka dot plant", bought: 20170915, color: "pink and green"},
-#     {name: "Cactus", bought: 20200517, color: "green"}]
-
-# plants.each{|hash| Plant.create(hash)}
-
-
-
-
-
-
-# 3. Use Faker and mass create
-## step 1: write a method that creates a person
-# def create_person
-#     free = ["mornings", "evenings", "always", "afternoons", "weekends", "none"].sample
-
-#     person = Person.create(
-#         name: Faker::Movies::HitchhikersGuideToTheGalaxy.character,
-#         free_time: free,
-#         age: rand(11...70)
-#     )
-# end
-
-
-
-## step 2: write a method that creates a joiner
-# Why are we not passing event_planner in the argument
-  
-
-# def create_joiners(person)
-#     plants_number = rand(1..4)
-#     plants_number.times do 
-#         PlantParenthood.create(
-#             plant_id: Plant.all.sample.id, 
-#             person_id: person.id, 
-#             affection: rand(101), 
-#             favorite?: [true, false].sample
+#         Task.create(
+#            note: note_options,
+#            status: status_option,
+#            event_id: event.id 
 #         )
-#     end
-# end
-
-## step 3: invoke creating joiners by passing in an instance of a person
-# 
- 
-# 10.times do     
-#     create_joiners(create_person)
-#     ##### ALTERNATIVE:
-#     # person = create_person
-#     # create_joiners(person)
-# end
-
-# indoor = Category.create(name: "indoors")
-
-# Plant.update(category_id: indoor.id)
-
+#   end
 
 puts "🔥 🔥 🔥 🔥 "
